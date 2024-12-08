@@ -1,7 +1,8 @@
 from rest_framework import routers
-from .api import BookViewSet, LoanViewSet, UserViewSet, GroupViewSet
+from books.api import BookViewSet, LoanViewSet, UserViewSet
 from django.urls import include, path
 from rest_framework.documentation import include_docs_urls
+from . import views
 
 
 
@@ -10,12 +11,19 @@ router = routers.DefaultRouter()
 router.register('api/books', BookViewSet)
 router.register('api/loans', LoanViewSet)
 router.register('api/users', UserViewSet)
-router.register('api/groups', GroupViewSet)
+
+
 
 
 urlpatterns = [
 
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('docs/', include_docs_urls(title="Libray API"))
+    path('docs/', include_docs_urls(title="Libray API")),
+
+
+    path('signup', views.signup),
+    path('login', views.login),
+    path('test_token', views.test_token)
+
+    
 ]

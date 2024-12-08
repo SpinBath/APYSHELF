@@ -1,0 +1,28 @@
+POST http://127.0.0.1:8000/login
+Content-Type: application/json
+
+{
+  "email": "david@gmail.com",
+  "password": "contraseña"
+}
+
+###
+
+POST http://127.0.0.1:8000/signup
+Content-Type: application/json
+
+{
+  "email": "david@gmail.com",
+  "name": "David",
+  "middlename": "Sanchez",
+  "national_id": "123456789",
+  "phone": "999888777",
+  "password": "contraseña"
+}
+
+###
+
+GET http://127.0.0.1:8000/test_token
+Content-Type: application/json
+Authorization: Token dc0bafb3c196d8bad52ff32dcfc024f96e24637f
+
