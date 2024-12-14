@@ -36,6 +36,22 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
 
         return user
+     
+     def create_admin(self, email, name, password=None):
+       
+        email = self.normalize_email(email)
+
+        user = self.model(
+            email=email,
+            name=name
+        )
+
+        user.set_password(password)  
+
+        user.save(using=self._db)
+
+        return user
+         
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -71,6 +87,7 @@ class Book(models.Model):
 
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
+    date = models.DateField()
     genre = models.CharField(max_length=50)
     description = models.TextField(max_length=300)
 
