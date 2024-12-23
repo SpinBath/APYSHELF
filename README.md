@@ -1,5 +1,2 @@
 # APYSHELF
 DJANGO API REST for a library.
-
-> [!WARNING]  
-> UNDER DEVELOPMENT 
