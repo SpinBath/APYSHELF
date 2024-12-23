@@ -29,7 +29,6 @@ def login(request):
     return Response({'token': token.key, 'user': serializer.data})
 
 
-
 @api_view(['POST'])
 def signup(request):
 
@@ -48,8 +47,20 @@ def signup(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def test_token(request):
-    return Response("passed for {}".format(request.user.email))
+
+    user = request.user
+
+    user_data = {
+            "email": user.email,
+            "name": user.name,
+            "middlename": user.middlename,
+            "national_id": user.national_id,
+            "phone": user.phone,
+        }
+
+    return Response(user_data)

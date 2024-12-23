@@ -2,8 +2,8 @@ POST http://127.0.0.1:8000/login
 Content-Type: application/json
 
 {
-  "email": "david@gmail.com",
-  "password": "contraseña"
+  "email": "admin@apyshelf.com",
+  "password": "admin"
 }
 
 ###
@@ -24,5 +24,6 @@ Content-Type: application/json
 
 GET http://127.0.0.1:8000/test_token
 Content-Type: application/json
-Authorization: Token dc0bafb3c196d8bad52ff32dcfc024f96e24637f
+
+Authorization: Token 0720cae7ca3a852cebff7e960268037c86f94b9b
 
