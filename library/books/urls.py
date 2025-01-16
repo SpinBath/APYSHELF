@@ -20,7 +20,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('docs/', include_docs_urls(title="Libray API")),
 
-
     path('signup', views.signup),
     path('login', views.login),
     path('test_token', views.test_token),

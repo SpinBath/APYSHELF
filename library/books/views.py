@@ -56,9 +56,11 @@ def test_token(request):
     user = request.user
 
     user_data = {
+            "id": user.id,
             "email": user.email,
             "name": user.name,
             "middlename": user.middlename,
+            "lastname": user.lastname,
             "national_id": user.national_id,
             "phone": user.phone,
         }

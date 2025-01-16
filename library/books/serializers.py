@@ -10,11 +10,11 @@ class UserSerializer(serializers.ModelSerializer):
 class BookSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Book
-        fields = ['id', 'title', 'date', 'author', 'genre', 'available']
+        fields = ['id', 'title', 'date', 'author', 'genre', 'description', 'orders_count','status']
 
 
 class LoanSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Loan
-        fields = ['id', 'book', 'borrow_date', 'return_date']
+        fields = ['id', 'owner', 'book', 'book_title', 'borrow_date', 'return_date', 'status']
 
