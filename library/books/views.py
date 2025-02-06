@@ -56,6 +56,7 @@ def test_token(request):
     user = request.user
 
     user_data = {
+            "profile_image": str(user.profile_image),
             "id": user.id,
             "email": user.email,
             "name": user.name,
@@ -63,6 +64,7 @@ def test_token(request):
             "lastname": user.lastname,
             "national_id": user.national_id,
             "phone": user.phone,
+            "is_staff": user.is_staff,
         }
 
     return Response(user_data)

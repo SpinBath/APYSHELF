@@ -39,10 +39,11 @@ class CustomUserManager(BaseUserManager):
      def create_admin(self, email, name, password=None, **extra_fields):
        
         email = self.normalize_email(email)
-
+        
         user = self.model(
             email=email,
-            name=name, 
+            name=name,
+            is_staff = True, 
             **extra_fields
         )
 
@@ -55,6 +56,7 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
 
+    profile_image = models.ImageField(upload_to ='profile_images/', blank=True, null=True)
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=50)
     middlename = models.CharField(max_length=50)
