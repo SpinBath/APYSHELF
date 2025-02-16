@@ -23,8 +23,33 @@ def create_default_user(sender, **kwargs):
             lastname='Doe',
             national_id='987987987z',  
             phone='923923923',       
-            password='password123'    
+            password='1234'    
         )
+
+    if not CustomUser.objects.filter(email='carljohnson@example.com').exists():
+
+        CustomUser.objects.create_user(
+            email='carljohnson@example.com',
+            name='Carl',
+            middlename='B.',
+            lastname='Johnson',
+            national_id='987987987a',
+            phone='555777999',
+            password='1234'
+    )
+        
+    if not CustomUser.objects.filter(email='janesmith@example.com').exists():
+
+        CustomUser.objects.create_user(
+            email='janesmith@example.com',
+            name='Jane',
+            middlename='Alice',
+            lastname='Smith',
+            national_id='123456789x',
+            phone='987654321',
+            password='1234'
+    )
+
 
 @receiver(post_migrate)
 def create_default_book(sender, **kwargs):
@@ -63,4 +88,26 @@ def create_default_book(sender, **kwargs):
             description=(
                 'A classic novel of manners that explores the issues of class, marriage, and morality in early 19th-century England.'
             )
-    )
+        )
+    
+    
+    if not Book.objects.filter(title='Moby-Dick').exists():
+        Book.objects.create(
+            title='Moby-Dick',
+            author='Herman Melville',
+            date='1851-10-18',
+            genre='Adventure, Epic, Maritime Fiction',
+            description=(
+                'A gripping tale of obsession and revenge, following Captain Ahab’s relentless pursuit of the elusive white whale, Moby-Dick.'
+            )
+        )
+    if not Book.objects.filter(title='The Great Gatsby').exists():
+        Book.objects.create(
+            title='The Great Gatsby',
+            author='F. Scott Fitzgerald',
+            date='1925-04-10',
+            genre='Tragedy, Historical Fiction',
+            description=(
+                'A story of wealth, love, and the American Dream, set in the Roaring Twenties and centered around the enigmatic Jay Gatsby.'
+            )
+        )

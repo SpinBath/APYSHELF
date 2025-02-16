@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-
-
-# Create your models here.
+from django.core.exceptions import ValidationError
 
 class CustomUserManager(BaseUserManager):
 
@@ -81,22 +79,16 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 class Book(models.Model):
 
     book_choices = (("Available", "Available"),
-                    ("Not Available", "Not Available"),
-                    ("On hold", "On hold"))
+                    ("Not Available", "Not Available"))
 
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
     date = models.DateField()
     genre = models.CharField(max_length=50)
     description = models.TextField(max_length=300)
-    orders_count = models.IntegerField(default=0)
     status = models.CharField(max_length=15, choices=book_choices, default="Available")
 
     def save(self, *args, **kwargs):
-
-        if self.orders_count == 0:
-            self.status = "Available"
-        
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -106,14 +98,32 @@ class Loan(models.Model):
 
     loan_choices = (("Accepted", "Accepted"),
                     ("Rejected", "Rejected"),
-                    ("On hold", "On hold"))
+                    ("On hold", "On hold"),
+                    ("Picked up", "Picked up"),  
+                    ("Returned", "Returned"),
+                    )
 
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     book_title = models.CharField(max_length=200)
-    borrow_date = models.DateTimeField(auto_now_add=True)
+    borrow_date = models.DateTimeField(null=True, blank=True)
     return_date = models.DateTimeField(null=True, blank=True)
     status = models.CharField(max_length=15, choices=loan_choices, default="On Hold")
+
+    def clean(self):
+
+        if self.return_date and self.borrow_date >= self.return_date:
+            raise ValidationError("La fecha de devolución debe ser posterior a la de préstamo.")
+
+        existing_loans = Loan.objects.filter(book=self.book).exclude(id=self.id)
+
+        if existing_loans.exists():
+            raise ValidationError("Este libro ya ha sido prestado y aún no ha sido devuelto.")
+
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.book.title}'

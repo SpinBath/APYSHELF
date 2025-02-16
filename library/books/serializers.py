@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
 class BookSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Book
-        fields = ['id', 'title', 'date', 'author', 'genre', 'description', 'orders_count','status']
+        fields = ['id', 'title', 'date', 'author', 'genre', 'description','status']
 
 
 class LoanSerializer(serializers.ModelSerializer):
